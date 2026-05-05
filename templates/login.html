@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduMind | Student Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --primary: #B20738;
+  --primary-dark: #8C042A;
+  --text-dark: #111;
+  --font-heading: 'Oswald', sans-serif;
+  --font-body: 'Jost', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-body);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+}
+.login-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  padding: 50px 40px;
+  border-radius: 24px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+  text-align: center;
+  animation: fadeIn 0.6s ease-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.logo {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--primary);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.logo i { font-size: 36px; }
+.subtitle {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 15px;
+}
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 14px;
+}
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-wrapper i {
+  position: absolute;
+  left: 16px;
+  color: #888;
+}
+.input-wrapper input {
+  width: 100%;
+  padding: 14px 16px 14px 45px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 15px;
+  background: #f9f9f9;
+  transition: 0.3s;
+}
+.input-wrapper input:focus {
+  background: #fff;
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(178,7,56,0.1);
+}
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  font-size: 13.5px;
+}
+.options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #555;
+  cursor: pointer;
+}
+.options a {
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: none;
+}
+.options a:hover { text-decoration: underline; }
+.login-btn {
+  width: 100%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 10px 20px rgba(178,7,56,0.25);
+  font-family: inherit;
+}
+.login-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 15px 25px rgba(178,7,56,0.35);
+}
+.register-link {
+  margin-top: 25px;
+  font-size: 14px;
+  color: #666;
+}
+.register-link a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+.register-link a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+  <div class="logo"><i class="fa-solid fa-graduation-cap"></i> EduMind</div>
+  <p class="subtitle">Welcome back! Please login to your account.</p>
+
+  <form onsubmit="event.preventDefault(); const e=document.getElementById('loginEmail').value; const n=e.split('@')[0]; localStorage.setItem('studentName', n.charAt(0).toUpperCase() + n.slice(1)); window.location.href='index.html';">
+    <div class="form-group">
+      <label>Email Address</label>
+      <div class="input-wrapper">
+        <i class="fa fa-envelope"></i>
+        <input type="email" id="loginEmail" placeholder="example@edumind.edu" required>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label>Password</label>
+      <div class="input-wrapper">
+        <i class="fa fa-lock"></i>
+        <input type="password" placeholder="••••••••" required>
+      </div>
+    </div>
+
+    <div class="options">
+      <label><input type="checkbox"> Remember me</label>
+      <a href="javascript:void(0)">Forgot Password?</a>
+    </div>
+
+    <button type="submit" class="login-btn">Login to EduMind <i class="fa fa-arrow-right" style="margin-left:6px;"></i></button>
+  </form>
+
+  <div class="register-link">
+    Don't have an account? <a href="application.html">Apply Now</a>
+  </div>
+</div>
+
+</body>
+</html>

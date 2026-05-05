@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduMind | Alumni Network</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body { font-family: 'Jost', sans-serif; background: #fafafa; margin:0; padding:0; color: #333; }
+.header { background: #000; padding: 20px 40px; color: #fff; text-transform:uppercase; font-size:12px; font-weight:600;}
+.header a { color: #aaa; text-decoration:none; margin-right:20px; font-size:14px; transition:0.3s;}
+.header a:hover { color:#fff; }
+.hero-banner { background: #B20738; color: white; padding: 60px 40px; text-align: center; }
+.hero-banner h1 { font-family: 'Oswald', sans-serif; font-size: 48px; text-transform: uppercase; margin:0;}
+.container { max-width: 1100px; margin: 50px auto; padding: 0 20px; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; text-align:center;}
+.card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-color: #B20738;}
+.card h3 { color: #111; font-size: 20px; margin-bottom: 5px; font-family:'Oswald', sans-serif;}
+.card span { color: #B20738; font-weight: 600; font-size: 14px; display:block; margin-bottom: 15px;}
+.card p { font-size: 14px; line-height: 1.6; color: #666; }
+.avatar { width: 80px; height: 80px; border-radius: 50%; background: #eee; margin: 0 auto 20px; display:flex; align-items:center; justify-content:center; font-size:32px; color:#aaa;}
+</style>
+</head>
+<body>
+<div class="header"><a href="index.html"><i class="fa fa-arrow-left"></i> Home</a> <span>Alumni Association</span></div>
+<div class="hero-banner"><h1>EduMind Alumni Network</h1><p style="margin-top:10px; font-size:18px;">Over 50,000 successful graduates leading industries worldwide.</p></div>
+<div class="container">
+  <div class="grid">
+    <div class="card">
+      <div class="avatar"><i class="fa fa-user-tie"></i></div>
+      <h3>Arjun Mehta</h3>
+      <span>Chief Technology Officer, TechCorp</span>
+      <p>"EduMind gave me the exact hands-on engineering foundation I needed to scale large distributed systems."</p>
+    </div>
+    <div class="card">
+      <div class="avatar"><i class="fa fa-user-md"></i></div>
+      <h3>Dr. Priya Sharma</h3>
+      <span>Lead Surgeon, Global Health</span>
+      <p>"The research-intensive medical program and world-class simulation labs profoundly shaped my surgical career."</p>
+    </div>
+    <div class="card">
+      <div class="avatar"><i class="fa fa-user-astronaut"></i></div>
+      <h3>Karan Patel</h3>
+      <span>Aerospace Engineer, ISRO</span>
+      <p>"From building campus rovers to working on real satellite systems, the faculty mentorship was unparalleled."</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

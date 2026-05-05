@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduMind | AI Helpdesk & Campus Info</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Jost:wght@300;400;500;600&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ── Variables & Reset ── */
+:root {
+  --primary: #B20738;
+  --primary-dark: #8C042A;
+  --bg-dark: #000;
+  --text-dark: #111;
+  --text-light: #fff;
+  --text-muted: #555;
+  --font-heading: 'Oswald', sans-serif;
+  --font-body: 'Jost', sans-serif;
+  
+  --chat-bg: rgba(15, 17, 23, 0.85); 
+  --chat-surface: rgba(22, 24, 34, 0.9);
+  --chat-border: rgba(255,255,255,0.1);
+  --accent: #6c63ff;
+  --accent2: #ff6584;
+  --chat-text: #f0f0f5;
+  --user-bubble: linear-gradient(135deg, #6c63ff, #a78bfa);
+  --bot-bubble: rgba(255,255,255,0.05);
+}
+
+[data-theme="light"] {
+  --chat-bg: rgba(255, 255, 255, 0.85);
+  --chat-surface: rgba(240, 242, 245, 0.95);
+  --chat-border: rgba(0,0,0,0.1);
+  --chat-text: #111;
+  --bot-bubble: rgba(0,0,0,0.05);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font-body); overflow-x: hidden; background: #000; }
+a { text-decoration: none; color: inherit; }
+
+/* ── Landing Page Background & Nav ── */
+.top-bar {
+  background-color: var(--bg-dark); color: var(--text-light);
+  padding: 8px 40px; display: flex; justify-content: space-between;
+  font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+}
+.top-bar-left, .top-bar-right { display: flex; gap: 24px; }
+.top-bar a:hover { color: var(--primary); }
+
+.nav-wrapper {
+  position: absolute; top: 40px; left: 0; width: 100%; padding: 0 40px; z-index: 1000;
+}
+.navbar {
+  background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px);
+  border-radius: 40px; padding: 12px 24px; display: flex; align-items: center;
+  justify-content: space-between; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.logo { display:flex; align-items:center; gap:12px; color:var(--primary); font-family: 'DM Sans', sans-serif; font-size:26px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase;}
+.logo i { font-size: 32px; }
+.nav-links { display: flex; gap: 32px; list-style: none;}
+.nav-item { position: relative; padding: 10px 0; }
+.nav-item > a { font-size: 16px; font-weight: 500; color: var(--text-muted); transition: color 0.3s; display:block; height: 100%;}
+.nav-item:hover > a { color: var(--primary); }
+.nav-actions { display: flex; align-items: center; gap: 12px; }
+.btn-primary {
+  background: var(--primary); color: white; padding: 10px 24px; border-radius: 30px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer; transition: 0.3s; font-family: inherit; font-size: 15px; text-decoration: none;
+}
+.btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); color: white; }
+
+/* ── Mega Menus ── */
+.mega-menu {
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(20px);
+  width: 90vw; max-width: 1200px; background: #fff; border-radius: 20px; padding: 40px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15); opacity: 0; visibility: hidden;
+  transition: all 0.3s ease; z-index: 999; display: flex; gap: 40px; text-align: left;
+}
+.nav-item:hover .mega-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(10px); }
+
+/* About & Research Layout */
+.mega-left { width: 300px; flex-shrink: 0; border-right: 1px solid #f0f0f0; padding-right: 30px; }
+.mega-left h3 { color: var(--primary); font-family: var(--font-heading); text-transform: uppercase; font-size: 22px; margin-bottom: 15px; }
+.mega-left p { color: #555; font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
+.mega-left a { color: var(--primary); font-weight: 500; font-size: 15px; }
+.mega-right { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; flex-grow: 1; }
+.mega-link-group h4 { font-size: 16px; font-weight: 500; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; cursor: pointer; transition: 0.2s; color: #111;}
+.mega-link-group h4 i { font-size: 12px; color: #999; }
+.mega-link-group h4:hover { color: var(--primary); }
+.mega-link-group p { font-size: 13.5px; color: #777; line-height: 1.5; }
+
+/* Campus Layout */
+.mega-campus-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; width: 100%; }
+.campus-card { background: #fafafa; padding: 25px 20px; border-radius: 12px; border: 1px solid #eee; transition: 0.2s; cursor: pointer; text-align: center;}
+.campus-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-color: var(--primary); background: #fff;}
+.campus-card i { font-size: 32px; color: var(--primary); margin-bottom: 15px; }
+.campus-card h4 { color: #111; margin-bottom: 8px; font-size: 18px; font-weight: 600;}
+.campus-card p { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
+
+/* Academics Layout (Screenshot 4) */
+.mega-academics { padding: 0; padding-right: 20px; gap: 0; }
+.acad-sidebar { width: 220px; background: #fafafa; border-right: 1px solid #ebebeb; padding: 20px 0; border-top-left-radius: 20px; border-bottom-left-radius: 20px; }
+.acad-tab { padding: 12px 30px; font-weight: 500; font-size: 15px; cursor: pointer; color: #555; transition: 0.2s;}
+.acad-tab.active, .acad-tab:hover { color: var(--primary); background: #fff; border-left: 3px solid var(--primary); }
+.acad-content { display: flex; align-items: stretch; flex: 1; padding: 20px; gap: 20px; background: #fff; border-top-right-radius: 20px; border-bottom-right-radius: 20px;}
+.acad-sub-sidebar { width: 220px; border-right: 1px solid #ebebeb; padding-right: 20px; }
+.acad-sub-tab { padding: 10px 15px; font-size: 14px; margin-bottom: 5px; border-radius: 8px; cursor: pointer; color:#666; transition: 0.2s;}
+.acad-sub-tab.active, .acad-sub-tab:hover { background: #fffafa; color: var(--primary); font-weight: 500; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+.acad-programs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; flex: 1; max-height:400px; overflow-y:auto; padding-right: 10px; align-content: start; }
+.program-item { font-size: 13.5px; color: #333; line-height: 1.5; padding: 8px; border-radius: 6px; cursor: pointer; transition: 0.2s;}
+.program-item:hover { background: #f9f9f9; color: var(--primary); }
+
+/* ── Hero & Chat Overlay Background ── */
+.hero {
+  height: 100vh; min-height: 800px;
+  background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.2) 100%),
+              url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+  display: flex; align-items: center; justify-content: center; padding-top: 80px; position: relative;
+}
+
+.chat-overlay {
+  width: 90%; max-width: 1200px; height: 80vh; max-height: 800px;
+  background: var(--chat-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--chat-border); border-radius: 20px; display: flex; overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.3); animation: fadeUp 1s ease both;
+  color: var(--chat-text); font-family: 'DM Sans', sans-serif;
+}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── Chatbot Components ── */
+/* Similar to previous styling */
+.sidebar { width: 280px; min-width: 280px; background: var(--chat-surface); border-right: 1px solid var(--chat-border); display: flex; flex-direction: column; transition: 0.3s; position: relative; }
+.sidebar.collapsed { width: 0; min-width: 0; overflow: hidden; border: none; }
+.sidebar-header { padding: 24px 20px; border-bottom: 1px solid var(--chat-border); }
+.brand { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+.brand-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; color:#fff;}
+.brand-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; }
+.brand-name span { color: var(--accent); }
+.new-chat-btn { width: 100%; padding: 10px; background: rgba(108,99,255,0.12); border: 1px solid rgba(108,99,255,0.3); border-radius: 10px; color: var(--accent); font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;}
+.sidebar-section { padding: 15px 20px; flex: 1; overflow-y: auto; }
+.section-label { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; color: #888;}
+.topic-chip { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 14px; margin-bottom: 4px; border: 1px solid transparent; }
+.topic-chip:hover { background: rgba(255,255,255,0.05); border-color: var(--chat-border); }
+[data-theme="light"] .topic-chip:hover { background: rgba(0,0,0,0.05); }
+.developer-profile { padding: 15px 20px; border-top: 1px solid var(--chat-border); display: flex; align-items: center; gap: 12px; background: rgba(108,99,255,0.05); }
+.dev-avatar { width: 36px; height: 36px; background: var(--chat-surface); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px;}
+.dev-info { display: flex; flex-direction: column; gap: 4px; }
+.dev-name { font-size: 13px; font-weight: 700; }
+.dev-links { display: flex; gap: 12px; }
+.dev-links a { font-size: 14px; color: var(--accent); transition: 0.2s; }
+.main { flex: 1; display: flex; flex-direction: column; position: relative; }
+.chat-topbar { display: flex; align-items: center; padding: 16px 24px; border-bottom: 1px solid var(--chat-border); gap: 14px; }
+.toggle-btn { width: 36px; height: 36px; border-radius: 10px; background: var(--chat-surface); border: 1px solid var(--chat-border); display: flex; align-items: center; justify-content: center; cursor: pointer;}
+.chat-topbar-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; flex: 1; }
+.topbar-actions { display: flex; gap: 10px; }
+.action-btn { width: 36px; height: 36px; border-radius: 10px; background: var(--chat-surface); border: 1px solid var(--chat-border); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;}
+.action-btn:hover { border-color: var(--accent); color: var(--accent); }
+.chat-box { flex: 1; overflow-y: auto; padding: 32px 24px; display: flex; flex-direction: column; gap: 8px; }
+.welcome-card { text-align: center; padding: 30px 20px; }
+.welcome-avatar { width: 64px; height: 64px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 15px; box-shadow: 0 10px 20px rgba(108,99,255,0.2); }
+.welcome-title { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+.welcome-sub { font-size: 14px; margin-bottom: 24px; opacity: 0.8; }
+.suggestion-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 450px; margin: 0 auto; }
+.suggestion-card { padding: 12px 14px; background: var(--chat-surface); border: 1px solid var(--chat-border); border-radius: 12px; cursor: pointer; text-align: left; font-size: 13px; transition: 0.2s; }
+.suggestion-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.message-row { display: flex; gap: 12px; animation: msgFade 0.3s ease both; max-width: 80%; }
+.message-row.user { flex-direction: row-reverse; margin-left: auto; }
+@keyframes msgFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.avatar { width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.bot-avatar { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white;}
+.user-avatar { background: var(--chat-surface); border: 1px solid var(--chat-border); }
+.bubble { padding: 12px 16px; border-radius: 16px; font-size: 14.5px; line-height: 1.6; }
+.bot .bubble { background: var(--bot-bubble); border: 1px solid var(--chat-border); border-top-left-radius: 4px; }
+.user .bubble { background: var(--user-bubble); border-top-right-radius: 4px; color: #fff; }
+.input-section { padding: 16px 24px 24px; border-top: 1px solid var(--chat-border); background: transparent; }
+.input-wrapper { display: flex; align-items: flex-end; gap: 10px; background: var(--chat-surface); border: 1px solid var(--chat-border); border-radius: 16px; padding: 10px 12px; transition: 0.3s; }
+.input-wrapper:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(108,99,255,0.1); }
+#userInput { flex: 1; background: transparent; border: none; outline: none; color: var(--chat-text); font-family: 'DM Sans', sans-serif; font-size: 14.5px; resize: none; max-height: 100px; line-height: 1.5; padding: 4px 0;}
+.mic-btn, .send-btn { width: 36px; height: 36px; border-radius: 10px; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;}
+.mic-btn { background: transparent; color: inherit; font-size: 16px; }
+.send-btn { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white; }
+
+/* ── Application Form Modal ── */
+.app-modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+  z-index: 3000; display: none; align-items: center; justify-content: center;
+}
+.app-modal {
+  background: white; width: 90%; max-width: 800px; max-height: 90vh;
+  border-radius: 20px; overflow-y: auto; padding: 40px; position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+.app-close-btn {
+  position: absolute; top: 20px; right: 20px; font-size: 24px; color: #555;
+  cursor: pointer; transition: 0.3s;
+}
+.app-close-btn:hover { color: var(--primary); }
+.app-title { font-family: var(--font-heading); font-size: 32px; color: var(--primary); margin-bottom: 20px; text-transform: uppercase; }
+.app-reqs { background: #fff5f7; border-left: 4px solid var(--primary); padding: 20px; margin-bottom: 30px; border-radius: 0 8px 8px 0; color: #444;}
+.app-reqs h3 { margin-top:0; color: var(--primary-dark); }
+.app-reqs ul { margin-left: 20px; line-height: 1.6; }
+.app-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; color: #222; }
+.app-form-group { display: flex; flex-direction: column; }
+.app-form-group.full { grid-column: span 2; }
+.app-form label { font-weight: 500; margin-bottom: 8px; font-size: 14.5px;}
+.app-form input, .app-form select, .app-form textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; font-size: 15px; background: #fafafa; transition: 0.2s;}
+.app-form input:focus, .app-form select:focus, .app-form textarea:focus { border-color: var(--primary); outline: none; background: #fff;}
+.app-submit-btn { background: var(--primary); color: white; border: none; padding: 14px 30px; border-radius: 30px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 20px; }
+.app-submit-btn:hover { background: #8C042A; }
+</style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <a href="international.html">International</a>
+      <a href="alumni.html">Alumni</a>
+      <a href="faculty.html">Faculty</a>
+      <a href="schools.html">Schools</a>
+    </div>
+    <div class="top-bar-right">
+      <a href="news.html">News</a>
+      <a href="blog.html">Blog</a>
+      <a href="events.html">Events</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <div class="nav-wrapper">
+    <nav class="navbar">
+      <div class="logo">
+        <i class="fa-solid fa-graduation-cap"></i> EduMind
+      </div>
+      <ul class="nav-links">
+        
+        <!-- About Mega Menu -->
+        <li class="nav-item">
+          <a href="#">About</a>
+          <div class="mega-menu">
+            <div class="mega-left">
+              <h3>About EduMind </h3>
+              <p>EduMind is a leading Indian institution dedicated to excellence in education, empowering the next generation of global leaders with world-class facilities, highly experienced faculty, and industry-aligned curriculums.</p>
+              <a href="about.html">↗ Know More</a>
+            </div>
+            <div class="mega-right">
+              <div class="mega-link-group"><h4>Rankings <i class="fa fa-chevron-right"></i></h4><p>Recognized globally in top tier university impact rankings.</p></div>
+              <div class="mega-link-group"><h4>Leadership <i class="fa fa-chevron-right"></i></h4><p>An experienced team guided by visionary educational leaders.</p></div>
+              <div class="mega-link-group"><h4>Accreditation <i class="fa fa-chevron-right"></i></h4><p>Awarded an A++ grade by the NAAC highlighting our quality.</p></div>
+              <div class="mega-link-group"><h4>History <i class="fa fa-chevron-right"></i></h4><p>Decades of excellence in shaping bright futures.</p></div>
+              <div class="mega-link-group"><h4>Governance <i class="fa fa-chevron-right"></i></h4><p>Transparent academic and administrative departments.</p></div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Campus Mega Menu -->
+        <li class="nav-item">
+          <a href="#">Campus</a>
+          <div class="mega-menu" style="left: 45%;">
+            <div class="mega-campus-grid">
+              <a href="campus.html?city=Bengaluru" style="text-decoration:none;"><div class="campus-card"><i class="fa-solid fa-city"></i><h4>Bengaluru Campus</h4><p>High-tech hub for Computing, AI, and IT.</p></div></a>
+              <a href="campus.html?city=Chennai" style="text-decoration:none;"><div class="campus-card"><i class="fa-solid fa-ship"></i><h4>Chennai Campus</h4><p>Engineering & Maritime research center.</p></div></a>
+              <a href="campus.html?city=Mumbai" style="text-decoration:none;"><div class="campus-card"><i class="fa-solid fa-landmark"></i><h4>Mumbai Campus</h4><p>Premier institute for Business and Finance.</p></div></a>
+              <a href="campus.html?city=Delhi" style="text-decoration:none;"><div class="campus-card"><i class="fa-solid fa-globe"></i><h4>Delhi Campus</h4><p>Center for Public Policy and Law.</p></div></a>
+              <a href="campus.html?city=Hyderabad" style="text-decoration:none;"><div class="campus-card"><i class="fa-solid fa-flask"></i><h4>Hyderabad Campus</h4><p>Biomedical & Pharmacy research campus.</p></div></a>
+            </div>
+          </div>
+        </li>
+
+        <!-- Academics Mega Menu -->
+        <li class="nav-item">
+          <a href="#">Academics & Programs</a>
+          <div class="mega-menu mega-academics" style="left: 40%;">
+            <div class="acad-sidebar">
+              <div class="acad-tab active" onmouseenter="showAcadPanel('acad-ug', event)">Undergraduate</div>
+              <div class="acad-tab" onmouseenter="showAcadPanel('acad-pg', event)">Postgraduate</div>
+              <div class="acad-tab" onmouseenter="showAcadPanel('acad-doc', event)">Doctoral</div>
+              <div class="acad-tab" onmouseenter="showAcadPanel('acad-online', event)">Online Programs</div>
+            </div>
+            
+            <!-- UG Panel -->
+            <div class="acad-content" id="acad-ug">
+              <div class="acad-sub-sidebar">
+                <div class="acad-sub-tab active" onmouseenter="showUgPanel('ug-arts', event)">Arts, Humanities & Commerce</div>
+                <div class="acad-sub-tab" onmouseenter="showUgPanel('ug-ayur', event)">Ayurveda</div>
+                <div class="acad-sub-tab" onmouseenter="showUgPanel('ug-agri', event)">Agriculture</div>
+                <div class="acad-sub-tab" onmouseenter="showUgPanel('ug-arch', event)">Architecture</div>
+                <div class="acad-sub-tab" onmouseenter="showUgPanel('ug-biz', event)">Business / Management</div>
+                <div class="acad-sub-tab" onmouseenter="showUgPanel('ug-bio', event)">Biotechnology</div>
+                <div class="acad-sub-tab" onmouseenter="showUgPanel('ug-comp', event)">Computing</div>
+                <div class="acad-sub-tab" onmouseenter="showUgPanel('ug-dent', event)">Dentistry</div>
+              </div>
+              
+              <div id="ug-arts" class="acad-programs">
+                <div class="program-item">B. A. (Hons) with Research in Mass Communication</div>
+                <div class="program-item">B. Com. (Honours) in FinTech</div>
+                <div class="program-item">B. Com. (Honours) with Research in Taxation</div>
+                <div class="program-item">B.B.A. (Honours) with Research</div>
+                <div class="program-item">B.Des. (Hons.) in Communication Design</div>
+                <div class="program-item">B.Sc. (Honours) in Visual Media and Communication</div>
+              </div>
+              
+              <div id="ug-ayur" class="acad-programs" style="display:none;">
+                <div class="program-item">BAMS (Bachelor of Ayurvedic Medicine)</div>
+                <div class="program-item">B.Sc. Nursing (Ayurveda)</div>
+                <div class="program-item">Diploma in Ayurvedic Pharmacy</div>
+              </div>
+
+              <div id="ug-agri" class="acad-programs" style="display:none;">
+                <div class="program-item">B.Sc. (Hons.) in Agriculture</div>
+                <div class="program-item">B.Sc. (Hons.) in Horticulture</div>
+                <div class="program-item">B.Tech in Agricultural Engineering</div>
+              </div>
+
+              <div id="ug-arch" class="acad-programs" style="display:none;">
+                <div class="program-item">B.Arch (Bachelor of Architecture)</div>
+                <div class="program-item">B.Plan (Bachelor of Planning)</div>
+              </div>
+
+              <div id="ug-biz" class="acad-programs" style="display:none;">
+                <div class="program-item">BBA (Bachelor of Business Administration)</div>
+                <div class="program-item">BBA in Logistics and Supply Chain</div>
+                <div class="program-item">BBA (Specialization in Business Analytics)</div>
+                <div class="program-item">B.Com. (Honours) integrated with ACCA</div>
+              </div>
+
+              <div id="ug-bio" class="acad-programs" style="display:none;">
+                <div class="program-item">B.Sc. Biotechnology</div>
+                <div class="program-item">B.Tech Biomedical Engineering</div>
+                <div class="program-item">B.Sc. Microbiology</div>
+              </div>
+
+              <div id="ug-comp" class="acad-programs" style="display:none;">
+                <div class="program-item">B.Tech Computer Science & Engineering</div>
+                <div class="program-item">B.Tech AI and Data Science</div>
+                <div class="program-item">BCA (Bachelor of Computer Applications)</div>
+                <div class="program-item">B.Sc. Computer Science</div>
+              </div>
+
+              <div id="ug-dent" class="acad-programs" style="display:none;">
+                <div class="program-item">BDS (Bachelor of Dental Surgery)</div>
+                <div class="program-item">Diploma in Dental Mechanics</div>
+              </div>
+
+            </div>
+
+            <!-- PG Panel -->
+            <div class="acad-content" id="acad-pg" style="display:none; padding:40px; flex-direction:column;">
+              <h3 style="color:var(--primary); font-family:var(--font-heading); font-size:24px; text-transform:uppercase; margin-bottom:20px;">Postgraduate Programs</h3>
+              <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                <div style="background:#fbfbfb; padding:20px; border-radius:12px; border:1px solid #eee;">
+                   <h4 style="color:#111; margin-bottom:10px;">Engineering & Tech</h4>
+                   <p style="color:#666; font-size:14px; line-height:1.5;">M.Tech Computer Science<br>M.Tech AI & Data Science<br>M.Tech VLSI Design</p>
+                </div>
+                <div style="background:#fbfbfb; padding:20px; border-radius:12px; border:1px solid #eee;">
+                   <h4 style="color:#111; margin-bottom:10px;">Management</h4>
+                   <p style="color:#666; font-size:14px; line-height:1.5;">MBA Finance<br>MBA Marketing<br>MBA Human Resources</p>
+                </div>
+                <div style="background:#fbfbfb; padding:20px; border-radius:12px; border:1px solid #eee;">
+                   <h4 style="color:#111; margin-bottom:10px;">Sciences</h4>
+                   <p style="color:#666; font-size:14px; line-height:1.5;">M.Sc Biotechnology<br>M.Sc Physics<br>M.Sc Applied Mathematics</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Doc Panel -->
+            <div class="acad-content" id="acad-doc" style="display:none; padding:40px; flex-direction:column;">
+              <h3 style="color:var(--primary); font-family:var(--font-heading); font-size:24px; text-transform:uppercase; margin-bottom:20px;">Doctoral Research (Ph.D)</h3>
+              <p style="color:#555; line-height:1.6; max-width:600px; margin-bottom:15px;">Pursue high-impact research across 40+ disciplines with fully-funded fellowship opportunities. EduMind offers dedicated research labs, international collaborations, and industry sponsorships for doctoral candidates.</p>
+              <button class="btn-primary" style="width:fit-content; margin-top:20px;" onclick="openApplicationForm()"><i class="fa fa-file-signature"></i> Start Ph.D Application</button>
+            </div>
+
+            <!-- Online Panel -->
+            <div class="acad-content" id="acad-online" style="display:none; padding:40px; flex-direction:column; overflow-y:auto; max-height:450px;">
+              <h3 style="color:var(--primary); font-family:var(--font-heading); font-size:24px; text-transform:uppercase; margin-bottom:20px;">Online & Distance Programs</h3>
+              <p style="color:#555; line-height:1.6; max-width:800px; margin-bottom:20px;">EduMind Online brings our world-class faculty directly to your screen. Whether you are a working professional looking to upskill, or a remote learner, our UGC-entitled degree programs and industry-aligned certifications offer maximum flexibility without compromising academic rigor.</p>
+              <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width:800px;">
+                <div style="background:#fbfbfb; padding:15px; border-radius:8px; border:1px solid #eee;">
+                   <h4 style="color:#111; margin-bottom:5px;"><i class="fa fa-laptop" style="color:var(--primary);"></i> Online MBA</h4>
+                   <p style="color:#666; font-size:13px; line-height:1.4;">2-year degree with specializations in AI, Finance, and HR.</p>
+                </div>
+                <div style="background:#fbfbfb; padding:15px; border-radius:8px; border:1px solid #eee;">
+                   <h4 style="color:#111; margin-bottom:5px;"><i class="fa fa-code" style="color:var(--primary);"></i> Online MCA</h4>
+                   <p style="color:#666; font-size:13px; line-height:1.4;">Master of Computer Applications focusing on Cloud & DevOps.</p>
+                </div>
+                <div style="background:#fbfbfb; padding:15px; border-radius:8px; border:1px solid #eee;">
+                   <h4 style="color:#111; margin-bottom:5px;"><i class="fa fa-certificate" style="color:var(--primary);"></i> Exec Certifications</h4>
+                   <p style="color:#666; font-size:13px; line-height:1.4;">6-month intensive bootcamps for Data Analytics and Cybersecurity.</p>
+                </div>
+                <div style="background:#fbfbfb; padding:15px; border-radius:8px; border:1px solid #eee;">
+                   <h4 style="color:#111; margin-bottom:5px;"><i class="fa fa-briefcase" style="color:var(--primary);"></i> Corporate Training</h4>
+                   <p style="color:#666; font-size:13px; line-height:1.4;">Custom skill-building cohorts designed for enterprise teams.</p>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </li>
+
+        <!-- Research Mega Menu -->
+        <li class="nav-item">
+          <a href="#">Research</a>
+          <div class="mega-menu" style="left: 60%;">
+            <div class="mega-left">
+              <h3>Research @ EduMind</h3>
+              <p>EduMind has partnered with nearly 400 funded projects, 150 in-house projects, and over 200 student projects aiming to address real-world problems with technological compassion.</p>
+              <a href="research.html" style="color:var(--primary); font-weight:600; text-decoration:none;">↗ Discover More</a>
+            </div>
+            <div class="mega-right">
+              <div class="mega-link-group"><h4>Centers <i class="fa fa-chevron-right"></i></h4><p>Researches at our academic divisions aim to bring positive change.</p></div>
+              <div class="mega-link-group"><h4>Patents <i class="fa fa-chevron-right"></i></h4><p>150+ patents have been granted to EduMind worldwide.</p></div>
+              <div class="mega-link-group"><h4>News <i class="fa fa-chevron-right"></i></h4><p>Updates on key research developments and innovations.</p></div>
+              <div class="mega-link-group"><h4>Projects <i class="fa fa-chevron-right"></i></h4><p>Interdisciplinary initiatives and outreach programs.</p></div>
+              <div class="mega-link-group"><h4>Publications <i class="fa fa-chevron-right"></i></h4><p>Scholarly articles, white papers, and global research outputs.</p></div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="nav-actions">
+        <!-- Admission Button opening modal -->
+        <button class="btn-primary" onclick="openApplicationForm()"><i class="fa fa-plus"></i> Admissions</button>
+        <button class="icon-btn"><i class="fa fa-search"></i></button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Hero Background with Chatbot Overlay -->
+  <section class="hero">
+    <div class="chat-overlay">
+      <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="brand"><div class="brand-icon">🎓</div><div class="brand-name">Edu<span>Mind</span></div></div>
+          <button class="new-chat-btn" onclick="newChat()"><i class="fa fa-plus"></i> New Chat</button>
+        </div>
+        <div class="sidebar-section">
+          <div class="section-label">Quick Topics</div>
+          <div class="topic-chip" onclick="askTopic('How to apply?')">🏫 Admissions</div>
+          <div class="topic-chip" onclick="askTopic('Exam schedules?')">📝 Exams</div>
+          <div class="topic-chip" onclick="askTopic('Hostel facilities?')">🏠 Hostel</div>
+          <div class="topic-chip" onclick="askTopic('Tuition fee?')">💰 Fees</div>
+          <div class="topic-chip" onclick="askTopic('Courses available?')">🎯 Courses</div>
+        </div>
+        <div class="developer-profile" style="cursor:pointer; transition:0.3s;" onclick="openProfileModal()">
+          <div class="dev-avatar" id="sidebarAvatar" style="background:var(--primary);color:#fff;">S</div>
+          <div class="dev-info"><div class="dev-name" id="sidebarName">Student</div><div style="font-size:11px; color:#888;">View Profile</div></div>
+        </div>
+      </div>
+      <div class="main">
+        <div class="chat-topbar">
+          <div class="toggle-btn" onclick="toggleSidebar()"><i class="fa fa-bars"></i></div>
+          <div class="chat-topbar-title">EduMind Helpdesk</div>
+          <div class="topbar-actions">
+            <div class="action-btn" onclick="toggleTheme()"><i class="fa fa-moon" id="themeIcon"></i></div>
+            <div class="action-btn" onclick="clearChat()"><i class="fa fa-trash-alt"></i></div>
+            <div class="action-btn" onclick="exportChat()"><i class="fa fa-download"></i></div>
+          </div>
+        </div>
+        <div class="chat-box" id="chat">
+          <div class="welcome-card" id="welcomeCard">
+            <div class="welcome-avatar">🤖</div>
+            <div class="welcome-title">Ask EduMind Assistant</div>
+            <div class="welcome-sub">I'm your AI guide for admissions, courses, and campus life.</div>
+            <div class="suggestion-grid">
+              <div class="suggestion-card" onclick="askTopic('How do I apply for admission?')">🏫 How do I apply?</div>
+              <div class="suggestion-card" onclick="askTopic('What are the campus facilities like?')">🏢 Campus facilities?</div>
+              <div class="suggestion-card" onclick="askTopic('Tell me about placement opportunities')">💼 Placements info</div>
+              <div class="suggestion-card" onclick="askTopic('What are the B.Tech programs offered?')">🎓 B.Tech programs?</div>
+            </div>
+          </div>
+        </div>
+        <div class="input-section">
+          <div class="input-wrapper">
+            <button class="mic-btn" id="micBtn" onclick="toggleVoice()"><i class="fa fa-microphone"></i></button>
+            <textarea id="userInput" placeholder="Ask anything about EduMind..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+            <button class="send-btn" onclick="sendMessage()"><i class="fa fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Profile Modal Overlay -->
+  <div class="app-modal-overlay" id="profileModalOverlay" onclick="closeProfileModal(event)">
+    <div class="app-modal" onclick="event.stopPropagation()" style="max-width:600px;">
+      <i class="fa fa-times app-close-btn" onclick="closeProfileModal()"></i>
+      <h1 class="app-title">Student Profile</h1>
+      <div class="app-reqs" style="background:#f4f6f8; border-left:4px solid #333;">
+        <h3 style="color:#111;"><i class="fa fa-user-graduate"></i> Academic Records</h3>
+        <ul style="list-style:none; margin-left:0; padding-left:0;">
+          <li style="margin-bottom:10px;"><strong>Registration No:</strong> <span id="regNo">EDM-2026-8492</span></li>
+          <li style="margin-bottom:10px;"><strong>Program:</strong> B.Tech in Artificial Intelligence</li>
+          <li style="margin-bottom:10px;"><strong>Current Semester:</strong> 4th Semester</li>
+          <li style="margin-bottom:10px;"><strong>Cumulative GPA:</strong> 8.9 / 10</li>
+        </ul>
+      </div>
+      <div style="display:flex; align-items:center; gap:20px; margin-top:20px;">
+         <div style="width:80px;height:80px;border-radius:18px;background:linear-gradient(135deg, var(--accent), var(--accent2));color:#fff;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:bold;" id="profileModalAvatar">S</div>
+         <div>
+            <h2 id="profileModalName" style="color:#111; font-family:'Syne', sans-serif; font-weight:700;">Student Name</h2>
+            <p style="color:#666;" id="profileModalEmail">student@edumind.edu</p>
+         </div>
+         <button class="app-submit-btn" style="margin-left:auto; background:#333; margin-top:0;" onclick="localStorage.removeItem('studentName'); window.location.href='login.html'">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Modal Overlay -->
+  <div class="app-modal-overlay" id="appModalOverlay" onclick="closeApplicationForm(event)">
+    <div class="app-modal" onclick="event.stopPropagation()">
+      <i class="fa fa-times app-close-btn" onclick="closeApplicationForm()"></i>
+      <h1 class="app-title">Admission Application 2026</h1>
+      <div class="app-reqs">
+        <h3><i class="fa fa-list-check"></i> Admission Requirements</h3>
+        <ul>
+          <li>A minimum aggregate of 60% in High School or equivalent.</li>
+          <li>Valid scores in National/State Level Entrance Examinations.</li>
+          <li>Proof of identity and updated passport-size photographs.</li>
+        </ul>
+      </div>
+      <form class="app-form" onsubmit="event.preventDefault(); alert('Your application has been submitted successfully!'); closeApplicationForm();">
+        <div class="app-form-group"><label>First Name</label><input type="text" required></div>
+        <div class="app-form-group"><label>Last Name</label><input type="text" required></div>
+        <div class="app-form-group full"><label>Email Address</label><input type="email" required></div>
+        <div class="app-form-group"><label>Phone Number</label><input type="tel" required></div>
+        <div class="app-form-group"><label>Program</label>
+          <select required>
+            <option value="">Select a program...</option>
+            <optgroup label="Engineering & Computing">
+              <option value="btech-cse">B.Tech Computer Science & Engineering</option>
+              <option value="btech-ai">B.Tech AI and Data Science</option>
+              <option value="btech-agri">B.Tech Agricultural Engineering</option>
+              <option value="bca">BCA (Bachelor of Computer Applications)</option>
+              <option value="mca">MCA</option>
+              <option value="mtech">M.Tech</option>
+            </optgroup>
+            <optgroup label="Medicine & Health">
+              <option value="bams">BAMS (Ayurveda)</option>
+              <option value="bsc-nursing">B.Sc. Nursing</option>
+            </optgroup>
+            <optgroup label="Business & Management">
+              <option value="bba">BBA</option>
+              <option value="bcom">B.Com (Hons.)</option>
+              <option value="mba">MBA</option>
+            </optgroup>
+            <optgroup label="Arts, Science & Architecture">
+              <option value="ba-econ">B.A. Economics</option>
+              <option value="ba-psych">B.A. Psychology</option>
+              <option value="barch">B.Arch</option>
+              <option value="bsc-agri">B.Sc. Agriculture</option>
+            </optgroup>
+            <optgroup label="Higher Research">
+              <option value="phd">Ph.D (Doctoral Programs)</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="app-form-group full"><label>Address</label><textarea rows="3" required></textarea></div>
+        <div class="app-form-group full" style="text-align: right;">
+          <button type="submit" class="app-submit-btn">Submit Application <i class="fa fa-paper-plane" style="margin-left:8px;"></i></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const name = localStorage.getItem('studentName') || 'Guest User';
+      document.getElementById('sidebarName').textContent = name;
+      document.getElementById('sidebarAvatar').textContent = name.charAt(0).toUpperCase();
+      document.getElementById('profileModalName').textContent = name;
+      document.getElementById('profileModalAvatar').textContent = name.charAt(0).toUpperCase();
+      document.getElementById('profileModalEmail').textContent = name.toLowerCase() + '@edumind.edu';
+    });
+
+    function openProfileModal() { document.getElementById('profileModalOverlay').style.display = 'flex'; }
+    function closeProfileModal(event) {
+      if (event && event.target !== document.getElementById('profileModalOverlay') && event.target.className !== 'fa fa-times app-close-btn') return;
+      document.getElementById('profileModalOverlay').style.display = 'none';
+    }
+
+    function showUgPanel(id, event) {
+       document.querySelectorAll('#acad-ug .acad-programs').forEach(p => p.style.display = 'none');
+       const target = document.getElementById(id);
+       if(target) target.style.display = 'grid';
+       
+       document.querySelectorAll('.acad-sub-tab').forEach(t => t.classList.remove('active'));
+       if(event) event.target.classList.add('active');
+    }
+
+    function showAcadPanel(id, event) {
+       document.querySelectorAll('.acad-content').forEach(p => p.style.display = 'none');
+       const target = document.getElementById(id);
+       if(target) target.style.display = 'flex';
+       
+       document.querySelectorAll('.acad-tab').forEach(t => t.classList.remove('active'));
+       if(event) event.target.classList.add('active');
+    }
+
+    let sidebarOpen = true;
+    function toggleSidebar() { sidebarOpen = !sidebarOpen; document.getElementById('sidebar').classList.toggle('collapsed', !sidebarOpen); }
+    function toggleTheme() {
+      const body = document.body; const icon = document.getElementById('themeIcon');
+      if(body.getAttribute('data-theme')==='light'){ body.removeAttribute('data-theme'); icon.className='fa fa-moon';}
+      else{ body.setAttribute('data-theme','light'); icon.className='fa fa-sun';}
+    }
+    function autoResize(el) { el.style.height='auto'; el.style.height = Math.min(el.scrollHeight, 100) + 'px'; }
+    function handleKey(e) { if(e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
+    function getTime() { return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }
+    function removeWelcome() { const w = document.getElementById('welcomeCard'); if(w) w.remove(); }
+    
+    function appendMessage(role, text) {
+      removeWelcome(); const chat = document.getElementById('chat');
+      const row = document.createElement('div'); row.className = `message-row ${role}`;
+      const avatarClass = role === 'bot' ? 'bot-avatar' : 'user-avatar';
+      row.innerHTML = `<div class="avatar ${avatarClass}">${role==='bot'?'🤖':'👤'}</div>
+        <div><div class="bubble">${text}</div><div style="font-size:11px; margin-top:4px; opacity:0.6;">${getTime()}</div></div>`;
+      chat.appendChild(row); chat.scrollTop = chat.scrollHeight; return row;
+    }
+    function askTopic(q) { document.getElementById('userInput').value = q; sendMessage(); }
+    function newChat() { document.getElementById('chat').innerHTML = ''; window.location.reload(); }
+    function clearChat() { if(confirm("Clear chat?")) newChat(); }
+    function exportChat() { alert('Chat exported'); }
+
+    function openApplicationForm() {
+      document.getElementById('appModalOverlay').style.display = 'flex';
+    }
+    
+    function closeApplicationForm(event) {
+      if (event && event.target !== document.getElementById('appModalOverlay') && event.target.className !== 'fa fa-times app-close-btn') return;
+      document.getElementById('appModalOverlay').style.display = 'none';
+    }
+
+    let recording = false;
+    let recognition = null;
+    if ('webkitSpeechRecognition' in window) {
+      recognition = new webkitSpeechRecognition();
+      recognition.onresult = e => {
+        document.getElementById('userInput').value += e.results[0][0].transcript;
+        toggleVoice(true);
+      };
+      recognition.onerror = () => toggleVoice(true);
+      recognition.onend = () => toggleVoice(true);
+    }
+    function toggleVoice(force=false) {
+      const mic = document.getElementById('micBtn');
+      if(!recognition) return alert("Browser not supported.");
+      if (recording || force) { recognition.stop(); recording=false; mic.style.color=''; }
+      else { recognition.start(); recording=true; mic.style.color='#ff6584'; }
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('userInput');
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      input.value = '';
+      input.style.height = 'auto';
+      appendMessage('user', msg);
+      
+      const chat = document.getElementById('chat');
+      const typingRow = document.createElement('div');
+      typingRow.className = 'message-row bot';
+      typingRow.id = 'typingRow';
+      typingRow.innerHTML = `<div class="avatar bot-avatar">🤖</div><div><div class="bubble">...</div></div>`;
+      chat.appendChild(typingRow);
+      chat.scrollTop = chat.scrollHeight;
+
+      function removeTyping() {
+        const t = document.getElementById('typingRow');
+        if (t) t.remove();
+      }
+
+      try {
+        const res = await fetch('/get', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'msg=' + encodeURIComponent(msg)
+        });
+        const data = await res.text();
+        removeTyping();
+        appendMessage('bot', data);
+      } catch (err) {
+        removeTyping();
+        // Fallback demo responses when backend isn't connected
+        // Smart fallback responses mapping multiple keys
+        const demos = [
+          { keys: ['admission', 'apply', 'application'], reply: 'Admissions are based on entrance exam and merit. <a href="javascript:void(0);" style="color:var(--accent);font-weight:600;text-decoration:underline;" onclick="openApplicationForm()">Click here to open the Application Form</a>' },
+          { keys: ['exam', 'schedule', 'schedules'], reply: 'Exams are conducted at the end of each semester. The timetable is shared one week before exams begin. Make sure to check the notice board regularly.' },
+          { keys: ['hostel', 'accommodation', 'room'], reply: 'Hostel facilities include furnished rooms, food, high-speed WiFi, 24/7 security, laundry, and recreational areas. Both boys and girls hostels are available.' },
+          { keys: ['fee', 'tuition', 'cost'], reply: 'The tuition fee is approximately ₹1,00,000 per year. Scholarships are available for meritorious and economically weaker students.' },
+          { keys: ['placement', 'job', 'recruit', 'records'], reply: 'Top companies visit campus every year. Our placement rate is above 90%. Companies include TCS, Infosys, Wipro, Amazon, and many more.' },
+          { keys: ['library', 'books'], reply: 'The library is open from 8 AM to 8 PM on weekdays and 9 AM to 5 PM on weekends. It has over 50,000 books and digital resources.' },
+          { keys: ['transport', 'bus'], reply: 'College buses are available across the city with multiple routes. Bus passes can be obtained from the transport office.' },
+          { keys: ['course', 'program', 'btech', 'degree', 'academics'], reply: 'We offer BTech, MTech, MBA, MCA and other programs across Engineering, Management and Science disciplines.' },
+          { keys: ['campus', 'infrastructure', 'facility', 'facilities'], reply: 'Our campus has modern infrastructure including smart classrooms, labs, sports facilities, cafeteria, and medical center.' },
+          { keys: ['faculty', 'teacher', 'professor'], reply: 'Our faculty members are highly qualified with PhDs from top institutions and industry experience.' }
+        ];
+
+        const lower = msg.toLowerCase();
+        let reply = "I'm not sure about that. Please visit the college office or call our helpline for more details.";
+        for (const item of demos) {
+          if (item.keys.some(k => lower.includes(k))) {
+            reply = item.reply;
+            break;
+          }
+        }
+        appendMessage('bot', reply);
+      }
+    }
+  </script>
+</body>
+</html>

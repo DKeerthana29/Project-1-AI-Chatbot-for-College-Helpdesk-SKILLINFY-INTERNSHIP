@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduMind | Faculty</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body { font-family: 'Jost', sans-serif; background: #fafafa; margin:0; padding:0; color: #333; }
+.header { background: #000; padding: 20px 40px; color: #fff; text-transform:uppercase; font-size:12px; font-weight:600;}
+.header a { color: #aaa; text-decoration:none; margin-right:20px; font-size:14px; transition:0.3s;}
+.header a:hover { color:#fff; }
+.hero-banner { background: #B20738; color: white; padding: 60px 40px; text-align: center; }
+.hero-banner h1 { font-family: 'Oswald', sans-serif; font-size: 48px; text-transform: uppercase; margin:0;}
+.container { max-width: 1100px; margin: 50px auto; padding: 0 20px; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s;}
+.card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-color: #B20738;}
+.card h3 { color: #111; font-size: 22px; margin-bottom: 5px; font-family:'Oswald', sans-serif;}
+.card span { color: #666; font-weight: 500; font-size: 14px; display:block; margin-bottom: 15px;}
+.card p { font-size: 14px; line-height: 1.6; color: #444; }
+.tag { display:inline-block; padding:4px 10px; background:#f4f6f8; color:#B20738; font-size:12px; border-radius:20px; font-weight:600; margin-top:10px;}
+</style>
+</head>
+<body>
+<div class="header"><a href="index.html"><i class="fa fa-arrow-left"></i> Home</a> <span>Faculty Directory</span></div>
+<div class="hero-banner"><h1>Distinguished Minds</h1><p style="margin-top:10px; font-size:18px;">Learn directly from field-leading experts and acclaimed innovators.</p></div>
+<div class="container">
+  <div class="grid">
+    <div class="card">
+      <h3>Dr. Aswartha</h3>
+      <span>Head of AI & Machine Learning</span>
+      <p>Holder of 14 patents in Neural Architecture Search and former lead researcher at DeepMind.</p>
+      <span class="tag">School of Computing</span>
+    </div>
+    <div class="card">
+      <h3>Dr. Lakshmi</h3>
+      <span>Professor of Molecular Biology</span>
+      <p>Acclaimed for her groundbreaking CRISPR breakthroughs and awarded the prestigious 2023 National Science Medal.</p>
+      <span class="tag">School of Sciences</span>
+    </div>
+    <div class="card">
+      <h3>Dr. Prabhavathi</h3>
+      <span>Dean of Business School</span>
+      <p>Harvard Business alumni with 20 years of Wall Street experience driving modern FinTech curriculum.</p>
+      <span class="tag">School of Management</span>
+      </div>
+      <div class="card">
+      <h3>Dr. Jeevan Kiran</h3>
+      <span>Dean of Law School</span>
+      <p>Harvard Law alumni with 20 years of complete experience.</p>
+      <span class="tag">School of Law</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

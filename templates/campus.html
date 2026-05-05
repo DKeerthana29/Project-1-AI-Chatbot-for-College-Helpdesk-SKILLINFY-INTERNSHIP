@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduMind | Campus Details</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* CSS similar to index */
+body { font-family: 'Jost', sans-serif; background: #fff; color: #111; margin:0; padding:0; }
+.hero { height: 60vh; background: linear-gradient(rgba(178,7,56,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover; display:flex; align-items:center; justify-content:center; color:#fff; text-align:center; }
+.hero h1 { font-family: 'Oswald', sans-serif; font-size: 50px; text-transform: uppercase; margin-bottom:10px; }
+.content { max-width: 1000px; margin: 50px auto; padding: 0 20px; text-align:center; }
+.content h2 { color: #B20738; margin-bottom: 20px; font-family:'Oswald', sans-serif; font-size:32px; text-transform:uppercase;}
+.grid-cards { display:flex; gap:20px; justify-content:center; margin-top:30px; text-align:left;}
+.card { padding:30px; background:#fbfbfb; border-radius:16px; flex:1; border:1px solid #eee; transition:0.3s; }
+.card:hover { transform: translateY(-5px); box-shadow:0 10px 20px rgba(0,0,0,0.05); border-color:#B20738;}
+.card h3 { color:#111; font-size:20px; margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+.card p { color:#666; font-size:15px; line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div>
+    <h1 id="campusTitle">Campus Overview</h1>
+    <p style="font-size:18px;">Discover our world-class facilities and vibrant student life.</p>
+    <br><a href="index.html" style="color:#fff; text-decoration:none; border:1px solid #fff; padding:10px 20px; border-radius:30px; display:inline-block; margin-top:10px;"><i class="fa fa-arrow-left"></i> Back to Homepage</a>
+  </div>
+</div>
+<div class="content">
+  <h2>Programs Offered at this Branch</h2>
+  <div class="grid-cards">
+    <div class="card"><h3><i class="fa fa-laptop-code" style="color:#B20738;"></i> B.Tech</h3><p>Undergraduate programs in Computer Science, Electrical, and Mechanical Engineering.</p></div>
+    <div class="card"><h3><i class="fa fa-chart-line" style="color:#B20738;"></i> M.Tech</h3><p>Postgraduate specialization focusing on Data Science, VLSI, and AI & Machine Learning.</p></div>
+    <div class="card"><h3><i class="fa fa-flask" style="color:#B20738;"></i> Ph.D</h3><p>Doctoral research spanning across multiple technical, medical, and artistic disciplines.</p></div>
+  </div>
+</div>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const city = params.get('city');
+  if(city) document.getElementById('campusTitle').textContent = city.toUpperCase() + " CAMPUS";
+</script>
+</body>
+</html>

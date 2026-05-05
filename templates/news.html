@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduMind | News</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body { font-family: 'Jost', sans-serif; background: #fafafa; margin:0; padding:0; color: #333; }
+.header { background: #000; padding: 20px 40px; color: #fff; text-transform:uppercase; font-size:12px; font-weight:600;}
+.header a { color: #aaa; text-decoration:none; margin-right:20px; font-size:14px; transition:0.3s;}
+.header a:hover { color:#fff; }
+.hero-banner { background: #B20738; color: white; padding: 60px 40px; text-align: center; }
+.hero-banner h1 { font-family: 'Oswald', sans-serif; font-size: 48px; text-transform: uppercase; margin:0;}
+.container { max-width: 1100px; margin: 50px auto; padding: 0 20px; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.card { background: #fff; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; overflow:hidden;}
+.card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-color: #B20738;}
+.card-img { width:100%; height:200px; background:#ddd; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:40px;}
+.card-content { padding: 30px; }
+.card h3 { color: #111; font-size: 20px; margin-bottom: 10px; font-family:'Jost', sans-serif;}
+.card p { font-size: 14px; line-height: 1.6; color: #666; }
+.date { font-size:12px; color:#B20738; font-weight:600; text-transform:uppercase; margin-bottom:10px; display:block;}
+</style>
+</head>
+<body>
+<div class="header"><a href="index.html"><i class="fa fa-arrow-left"></i> Home</a> <span>University News</span></div>
+<div class="hero-banner"><h1>Latest Announcements</h1><p style="margin-top:10px; font-size:18px;">Stay updated with campus breakthroughs and global accolades.</p></div>
+<div class="container">
+  <div class="grid">
+    <div class="card">
+      <div class="card-img"><i class="fa fa-newspaper"></i></div>
+      <div class="card-content">
+        <span class="date">Oct 12, 2026</span>
+        <h3>Ranked #1 in Innovation</h3>
+        <p>EduMind Vidyapeetham overtakes leading institutions to claim the top spot in the National University Innovation Metrics framework.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img"><i class="fa fa-newspaper"></i></div>
+      <div class="card-content">
+        <span class="date">Sep 28, 2026</span>
+        <h3>$50M Tech Grant Awarded</h3>
+        <p>The AI & Robotics center secures unprecedented funding for autonomous systems research from the Science Foundation.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img"><i class="fa fa-newspaper"></i></div>
+      <div class="card-content">
+        <span class="date">Aug 14, 2026</span>
+        <h3>New Medical Wing Inauguration</h3>
+        <p>The Chancellor inaugurates the state-of-the-art super specialty oncology ward, entirely designed by EduMind engineers and doctors.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
