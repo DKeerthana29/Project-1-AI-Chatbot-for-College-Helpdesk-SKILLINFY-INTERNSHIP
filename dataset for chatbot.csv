@@ -1,0 +1,103 @@
+text,intent
+How do I apply for admission?,admissions
+What is the admission process?,admissions
+What are eligibility criteria?,admissions
+When do admissions start?,admissions
+Is there an entrance exam?,admissions
+How to get admission in this college?,admissions
+What documents are required?,admissions
+Can I apply online?,admissions
+What is last date to apply?,admissions
+Is admission based on merit?,admissions
+What is the fee structure?,fees
+How much is the tuition fee?,fees
+What are semester charges?,fees
+Is scholarship available?,fees
+How can I pay fees?,fees
+Are installments available?,fees
+What is total course fee?,fees
+Do fees vary by course?,fees
+Is there refund policy?,fees
+fees?,fees
+When are exams?,exams
+What is exam schedule?,exams
+When will results be announced?,exams
+How to check results?,exams
+Are exams online or offline?,exams
+What is exam pattern?,exams
+When are mid exams?,exams
+Final exam date?,exams
+Where is timetable?,exams
+exam date when,exams
+Is hostel available?,hostel
+What is hostel fee?,hostel
+Are rooms shared?,hostel
+What facilities in hostel?,hostel
+Is food included?,hostel
+How to apply for hostel?,hostel
+Is hostel compulsory?,hostel
+Separate hostel for girls?,hostel
+Hostel rules?,hostel
+wifi in hostel?,hostel
+Hostel fees?,hostel
+Tell me hostel fee details,hostel
+What are library timings?,library
+Is library open on weekends?,library
+How many books can I borrow?,library
+Is digital library available?,library
+Can I access library online?,library
+Are journals available?,library
+Library rules?,placements
+How to issue books?,placements
+Fine for late return?,placements
+library location?,placements
+What are placement opportunities?,placements
+Which companies visit?,placements
+What is placement rate?,placements
+Are internships provided?,placements
+Highest package?,placements
+Do all students get placed?,placements
+Placement process?,faculty
+Is training provided?,faculty
+When do placements start?,faculty
+placement good?,faculty
+Who are faculty members?,faculty
+Are teachers experienced?,faculty
+Can I contact faculty?,faculty
+Are faculty qualified?,faculty
+Who is HOD?,faculty
+Do teachers support students?,faculty
+Guest lectures available?,courses
+How to meet faculty?,courses
+Do faculty help in projects?,courses
+faculty details?,courses
+What courses are offered?,courses
+What is syllabus?,courses
+Are AI courses available?,courses
+Course duration?,courses
+Can I change course?,courses
+Are electives available?,courses
+Subjects in course?,transport
+Practical training included?,transport
+Online courses available?,transport
+course details?,transport
+Is transport available?,transport
+Bus timings?,transport
+Are college buses available?,transport
+Transport fee?,transport
+Do buses cover my area?,transport
+Is transport optional?,transport
+How to apply for transport?,campus
+Multiple routes available?,campus
+Is tracking available?,campus
+bus facility?,campus
+How is campus?,campus
+What facilities are available?,campus
+Is wifi available?,campus
+Sports facilities?,campus
+Is campus safe?,campus
+Campus size?,campus
+Are there clubs?,campus
+Cafeteria available?,campus
+Events conducted?,campus
+campus environment?,campus
