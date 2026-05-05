@@ -2,9 +2,9 @@
 Designing an AI-powered chatbot that can answer student queries regarding admissions, exams, and campus facilities.
 
 
-# 🎓 AI Chatbot for College Helpdesk
+# AI Chatbot for College Helpdesk
 
-## 📖 Project Description
+## Project Description
 The **AI Chatbot for College Helpdesk** is an AI-powered conversational assistant designed to help students by answering queries related to college admissions, examinations, campus facilities, and other common academic information.
 
 This chatbot uses **Natural Language Processing (NLP)** along with **rule-based intent classification** to understand student questions and provide relevant predefined responses.
@@ -13,7 +13,7 @@ The project demonstrates how AI can be used to automate helpdesk support systems
 
 ---
 
-## 🎯 Objective
+## Objective
 The main objective of this project is to build a practical conversational chatbot that can:
 
 - Answer student queries instantly
@@ -24,31 +24,31 @@ The main objective of this project is to build a practical conversational chatbo
 
 ---
 
-## 🚀 Features
+## Features
 
-### 💬 Interactive Chat System
+### Interactive Chat System
 Allows users to ask questions in natural language.
 
-### 🧠 Intent Recognition
+### Intent Recognition
 Identifies the purpose of the user's query.
 
-### 📚 Predefined Response Generation
+### Predefined Response Generation
 Responds using a structured response database.
 
-### ⚙️ Rule-Based Decision Logic
+### Rule-Based Decision Logic
 Matches keywords and intents to generate responses.
 
-### 🔁 Fallback Handling
+### Fallback Handling
 Handles unknown or unsupported questions gracefully.
 
-### 🖥️ Simple User Interface
+### Simple User Interface
 Can be deployed as:
 - Command Line Interface (CLI)
 - Web Interface
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 - **Python**
 - **Natural Language Processing (NLP)**
@@ -59,7 +59,7 @@ Can be deployed as:
 
 ---
 
-## 🧠 Concepts & Skills Learned
+## Concepts & Skills Learned
 
 This project covers:
 
@@ -72,7 +72,7 @@ This project covers:
 
 ---
 
-## 🏗️ System Workflow
+## System Workflow
 
 ### Step 1: User Input
 The student enters a query.
@@ -122,7 +122,7 @@ If no match is found:
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```plaintext
 AI-Chatbot-College-Helpdesk/
@@ -145,7 +145,7 @@ AI-Chatbot-College-Helpdesk/
 
 ---
 
-## ⚙️ Installation Guide
+## Installation Guide
 
 ### Clone the Repository
 
@@ -171,7 +171,7 @@ pip install -r requirements.txt
 
 ---
 
-## ▶️ Running the Project
+## Running the Project
 
 ### Run using Python
 
@@ -181,7 +181,7 @@ python app.py
 
 ---
 
-## 💡 Example Queries
+## Example Queries
 
 ### Admission Related
 - What is the admission process?
@@ -201,7 +201,7 @@ python app.py
 
 ---
 
-## 📊 Sample Output
+## Sample Output
 
 **User:** What is the admission process?
 
@@ -217,31 +217,31 @@ The central library is located near Block A and is open from 8 AM to 8 PM.
 
 ---
 
-## 📈 Future Enhancements
+## Future Enhancements
 
 The chatbot can be improved by adding:
 
-### 🤖 Machine Learning Models
+### Machine Learning Models
 Use advanced ML algorithms for better intent detection.
 
-### 🌐 Web Deployment
+### Web Deployment
 Deploy using Flask or Streamlit.
 
-### 🗣️ Voice Support
+### Voice Support
 Enable speech-to-text interaction.
 
-### 📱 Mobile App Integration
+### Mobile App Integration
 Convert into an Android/iOS application.
 
-### 📡 Database Connectivity
+### Database Connectivity
 Fetch live college data dynamically.
 
-### 🔥 Deep Learning
+### Deep Learning
 Integrate transformers like BERT for contextual understanding.
 
 ---
 
-## 🎓 Learning Outcomes
+## Learning Outcomes
 
 This project helps in understanding:
 
@@ -253,7 +253,7 @@ This project helps in understanding:
 
 ---
 
-## 🏆 Applications
+## Applications
 
 This chatbot can be used in:
 
@@ -264,7 +264,7 @@ This chatbot can be used in:
 
 ---
 
-## 🤝 Contribution
+## Contribution
 
 Contributions are welcome.
 
@@ -277,19 +277,19 @@ To contribute:
 
 ---
 
-## 📜 License
+## License
 
 This project is created for **educational and academic purposes**.
 
 ---
 
-## 🙌 Acknowledgement
+## Acknowledgement
 
 Developed as part of an academic AI mini-project to demonstrate practical implementation of conversational AI systems.
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 **Dondluru Keerthana**  
 B.Tech CSE (AI)  
